@@ -7,355 +7,137 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🧪</text></svg>">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-
 :root{
-  --bg:#f5f5f2;
-  --surface:#ffffff;
-  --surface2:#fafaf8;
-  --border:rgba(0,0,0,0.09);
-  --border-em:rgba(0,0,0,0.16);
-  --text:#181816;
-  --text2:#636360;
-  --text3:#9c9c98;
-  --accent:#185FA5;
-  --accent-bg:#EBF3FC;
-  --accent-bd:rgba(24,95,165,0.25);
-  --accent-txt:#0C447C;
-  --teal:#0F6E56;
-  --teal-bg:#E1F5EE;
-  --teal-bd:#9FE1CB;
-  --teal-txt:#085041;
-  --amber:#7A4800;
-  --amber-bg:#FEF0D6;
-  --amber-bd:#FAC775;
-  --amber-txt:#633806;
+  --bg:#f5f5f2; --surface:#ffffff; --surface2:#fafaf8;
+  --border:rgba(0,0,0,0.09); --border-em:rgba(0,0,0,0.16);
+  --text:#181816; --text2:#636360; --text3:#9c9c98;
+  --accent:#185FA5; --accent-bg:#EBF3FC; --accent-bd:rgba(24,95,165,0.25); --accent-txt:#0C447C;
+  --teal:#0F6E56; --teal-bg:#E1F5EE; --teal-bd:#9FE1CB; --teal-txt:#085041;
+  --amber:#7A4800; --amber-bg:#FEF0D6; --amber-bd:#FAC775; --amber-txt:#633806;
+  --purple:#5B21B6; --purple-bg:#EDE9FE; --purple-bd:#C4B5FD; --purple-txt:#4C1D95;
+  --rose:#9F1239; --rose-bg:#FFF1F2; --rose-bd:#FECDD3; --rose-txt:#881337;
   --gray-bg:#f0f0ec;
-  --radius:8px;
-  --radius-lg:12px;
+  --radius:8px; --radius-lg:12px;
   --mono:'JetBrains Mono','Fira Mono','Courier New',monospace;
 }
-
 @media(prefers-color-scheme:dark){
   :root{
-    --bg:#141412;
-    --surface:#1f1f1d;
-    --surface2:#242422;
-    --border:rgba(255,255,255,0.08);
-    --border-em:rgba(255,255,255,0.15);
-    --text:#e6e6e2;
-    --text2:#8c8c88;
-    --text3:#5c5c58;
-    --accent:#5BA3E0;
-    --accent-bg:rgba(24,95,165,0.18);
-    --accent-bd:rgba(91,163,224,0.3);
-    --accent-txt:#85B7EB;
-    --teal:#2ab88a;
-    --teal-bg:rgba(15,110,86,0.18);
-    --teal-bd:rgba(42,184,138,0.3);
-    --teal-txt:#5DCAA5;
-    --amber:#E8972A;
-    --amber-bg:rgba(122,72,0,0.18);
-    --amber-bd:rgba(232,151,42,0.3);
-    --amber-txt:#FAC775;
+    --bg:#141412; --surface:#1f1f1d; --surface2:#242422;
+    --border:rgba(255,255,255,0.08); --border-em:rgba(255,255,255,0.15);
+    --text:#e6e6e2; --text2:#8c8c88; --text3:#5c5c58;
+    --accent:#5BA3E0; --accent-bg:rgba(24,95,165,0.18); --accent-bd:rgba(91,163,224,0.3); --accent-txt:#85B7EB;
+    --teal:#2ab88a; --teal-bg:rgba(15,110,86,0.18); --teal-bd:rgba(42,184,138,0.3); --teal-txt:#5DCAA5;
+    --amber:#E8972A; --amber-bg:rgba(122,72,0,0.18); --amber-bd:rgba(232,151,42,0.3); --amber-txt:#FAC775;
+    --purple:#A78BFA; --purple-bg:rgba(91,33,182,0.18); --purple-bd:rgba(167,139,250,0.3); --purple-txt:#C4B5FD;
+    --rose:#FB7185; --rose-bg:rgba(159,18,57,0.18); --rose-bd:rgba(251,113,133,0.3); --rose-txt:#FECDD3;
     --gray-bg:rgba(255,255,255,0.04);
   }
 }
-
-body{
-  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  min-height:100vh;
-  font-size:14px;
-  line-height:1.5;
-}
-
-/* ── Header ── */
-header{
-  background:var(--surface);
-  border-bottom:.5px solid var(--border-em);
-  padding:0 1.75rem;
-  height:52px;
-  display:flex;
-  align-items:center;
-  gap:10px;
-  position:sticky;
-  top:0;
-  z-index:100;
-}
-.logo{
-  width:30px;height:30px;
-  background:var(--accent-bg);
-  border:.5px solid var(--accent-bd);
-  border-radius:8px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:16px;
-}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;line-height:1.5}
+header{background:var(--surface);border-bottom:.5px solid var(--border-em);padding:0 1.75rem;height:52px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:100}
+.logo{width:30px;height:30px;background:var(--accent-bg);border:.5px solid var(--accent-bd);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px}
 .app-name{font-size:15px;font-weight:600;letter-spacing:-0.01em}
 .app-desc{font-size:12px;color:var(--text3);margin-left:2px}
-.save-flash{
-  margin-left:auto;
-  font-size:11px;color:var(--teal);
-  opacity:0;
-  transition:opacity .4s;
-  display:flex;align-items:center;gap:4px;
-}
+.save-flash{margin-left:auto;font-size:11px;color:var(--teal);opacity:0;transition:opacity .4s;display:flex;align-items:center;gap:4px}
 .save-flash.show{opacity:1}
-
-/* ── Main ── */
-main{
-  max-width:860px;
-  margin:0 auto;
-  padding:1.5rem 1.5rem 5rem;
-}
-
-/* ── Tabs ── */
-.tab-bar{
-  display:flex;
-  align-items:flex-end;
-  gap:2px;
-  border-bottom:.5px solid var(--border-em);
-  margin-bottom:1.5rem;
-}
-.tab-btn{
-  font-size:13px;padding:7px 16px;
-  cursor:pointer;
-  background:transparent;
-  color:var(--text2);
-  border:.5px solid transparent;
-  border-bottom:none;
-  border-radius:8px 8px 0 0;
-  font-family:inherit;
-  white-space:nowrap;
-}
+main{max-width:900px;margin:0 auto;padding:1.5rem 1.5rem 5rem}
+.tab-bar{display:flex;align-items:flex-end;gap:2px;border-bottom:.5px solid var(--border-em);margin-bottom:1.5rem}
+.tab-btn{font-size:13px;padding:7px 16px;cursor:pointer;background:transparent;color:var(--text2);border:.5px solid transparent;border-bottom:none;border-radius:8px 8px 0 0;font-family:inherit;white-space:nowrap}
 .tab-btn:hover{color:var(--text)}
-.tab-btn.on{
-  background:var(--surface);
-  color:var(--text);font-weight:500;
-  border-color:var(--border-em);
-  margin-bottom:-1px;position:relative;z-index:1;
-}
-.tab-x{
-  margin-left:5px;opacity:.3;cursor:pointer;font-size:13px;
-}
+.tab-btn.on{background:var(--surface);color:var(--text);font-weight:500;border-color:var(--border-em);margin-bottom:-1px;position:relative;z-index:1}
+.tab-x{margin-left:5px;opacity:.3;cursor:pointer;font-size:13px}
 .tab-x:hover{opacity:.7}
-.add-tab{
-  font-size:12px;padding:7px 12px;
-  border:none;background:transparent;
-  cursor:pointer;color:var(--text3);
-  font-family:inherit;
-  display:flex;align-items:center;gap:4px;
-  margin-bottom:1px;
-}
+.add-tab{font-size:12px;padding:7px 12px;border:none;background:transparent;cursor:pointer;color:var(--text3);font-family:inherit;display:flex;align-items:center;gap:4px;margin-bottom:1px}
 .add-tab:hover{color:var(--text2)}
-.tab-edit-input{
-  font-size:13px;padding:5px 12px;
-  border:.5px solid var(--accent-bd);
-  border-bottom:none;
-  border-radius:8px 8px 0 0;
-  background:var(--surface);
-  color:var(--text);
-  font-family:inherit;
-  outline:none;
-  margin-bottom:-1px;
-}
-
-/* ── Panel grid ── */
-.panel{
-  display:grid;
-  grid-template-columns:220px minmax(0,1fr);
-  gap:24px;
-}
-
-/* ── Input section ── */
+.tab-edit-input{font-size:13px;padding:5px 12px;border:.5px solid var(--accent-bd);border-bottom:none;border-radius:8px 8px 0 0;background:var(--surface);color:var(--text);font-family:inherit;outline:none;margin-bottom:-1px}
+.panel{display:grid;grid-template-columns:260px minmax(0,1fr);gap:24px}
 .sec{font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin:18px 0 9px}
 .sec:first-child{margin-top:0}
-
 .frow{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
 .frow label{font-size:13px;color:var(--text)}
-
-input[type=text],input[type=number]{
-  background:var(--surface);
-  border:.5px solid var(--border-em);
-  border-radius:var(--radius);
-  padding:5px 8px;
-  font-size:13px;
-  color:var(--text);
-  font-family:inherit;
-  outline:none;
-  transition:border-color .15s,box-shadow .15s;
-}
-input[type=text]:focus,input[type=number]:focus{
-  border-color:var(--accent);
-  box-shadow:0 0 0 2px var(--accent-bg);
-}
+input[type=text],input[type=number],select{background:var(--surface);border:.5px solid var(--border-em);border-radius:var(--radius);padding:5px 8px;font-size:13px;color:var(--text);font-family:inherit;outline:none;transition:border-color .15s,box-shadow .15s}
+input[type=text]:focus,input[type=number]:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-bg)}
 input[type=number]::-webkit-inner-spin-button{opacity:.4}
-
 .sample-row{display:flex;align-items:center;gap:5px}
-.step-btn{
-  width:28px;height:28px;
-  border:.5px solid var(--border-em);
-  border-radius:var(--radius);
-  background:var(--surface);
-  cursor:pointer;font-size:17px;
-  display:flex;align-items:center;justify-content:center;
-  color:var(--text);transition:background .1s;
-  font-family:inherit;
-}
+.step-btn{width:28px;height:28px;border:.5px solid var(--border-em);border-radius:var(--radius);background:var(--surface);cursor:pointer;font-size:17px;display:flex;align-items:center;justify-content:center;color:var(--text);transition:background .1s;font-family:inherit}
 .step-btn:hover{background:var(--gray-bg)}
-.sample-input{
-  width:62px;text-align:center;
-  font-size:15px;font-weight:600;
-  font-family:var(--mono);
-  border:.5px solid var(--border-em);
-  border-radius:var(--radius);
-  padding:4px 6px;
-  background:var(--surface);
-  color:var(--text);
-  outline:none;transition:border-color .15s,box-shadow .15s;
-}
-.sample-input:focus{
-  border-color:var(--accent);
-  box-shadow:0 0 0 2px var(--accent-bg);
-}
+.sample-input{width:62px;text-align:center;font-size:15px;font-weight:600;font-family:var(--mono);border:.5px solid var(--border-em);border-radius:var(--radius);padding:4px 6px;background:var(--surface);color:var(--text);outline:none;transition:border-color .15s,box-shadow .15s}
+.sample-input:focus{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-bg)}
 .unit{font-size:12px;color:var(--text3)}
-
 .s-grp{display:flex;gap:4px;align-items:center}
-.s-btn{
-  font-size:11px;padding:3px 8px;
-  border-radius:var(--radius);cursor:pointer;
-  border:.5px solid var(--border-em);
-  background:transparent;color:var(--text2);
-  font-family:inherit;transition:all .1s;
-}
+.s-btn{font-size:11px;padding:3px 8px;border-radius:var(--radius);cursor:pointer;border:.5px solid var(--border-em);background:transparent;color:var(--text2);font-family:inherit;transition:all .1s}
 .s-btn:hover{background:var(--gray-bg)}
 .s-btn.on{border-color:var(--accent-bd);background:var(--accent-bg);color:var(--accent-txt)}
 .surplus-n{width:42px;text-align:right;font-size:12px!important;padding:3px 6px!important}
-
-.vol-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.vol-row label{font-size:12px;color:var(--text)}
-.vol-right{display:flex;align-items:center;gap:5px}
-.vol-right input{width:56px;text-align:right;font-size:12px}
-
 .ab-hdr-row{display:flex;justify-content:space-between;align-items:center;margin-top:18px;margin-bottom:8px}
 .ab-hdr-row .sec{margin:0}
-.add-ab{
-  font-size:11px;padding:2px 8px;
-  border:.5px solid var(--border-em);
-  border-radius:var(--radius);
-  background:transparent;cursor:pointer;
-  color:var(--text2);font-family:inherit;
-  display:flex;align-items:center;gap:3px;
-}
+.add-ab{font-size:11px;padding:2px 8px;border:.5px solid var(--border-em);border-radius:var(--radius);background:transparent;cursor:pointer;color:var(--text2);font-family:inherit;display:flex;align-items:center;gap:3px}
 .add-ab:hover{background:var(--gray-bg)}
-
 .ab-cols{display:grid;grid-template-columns:1fr 70px 52px 22px;gap:5px;margin-bottom:4px}
 .ab-cols span{font-size:10px;color:var(--text3)}
 .ab-cols span:nth-child(2),.ab-cols span:nth-child(3){text-align:right}
-
 .ab-row{display:grid;grid-template-columns:1fr 70px 52px 22px;gap:5px;align-items:center;margin-bottom:6px}
 .ab-row input{font-size:12px}
-.ab-row input:nth-child(3){text-align:right}
 .dil-wrap{display:flex;align-items:center;gap:3px}
 .dil-wrap span{font-size:11px;color:var(--text3);flex-shrink:0}
 .dil-wrap input{flex:1;min-width:0;text-align:right}
-.del-btn{
-  border:none;background:transparent;cursor:pointer;
-  color:var(--text3);padding:0;line-height:1;
-  display:flex;align-items:center;justify-content:center;
-}
+.del-btn{border:none;background:transparent;cursor:pointer;color:var(--text3);padding:0;line-height:1;display:flex;align-items:center;justify-content:center}
 .del-btn:disabled{opacity:.2;cursor:default}
 .del-btn:not(:disabled):hover{color:#E24B4A}
-
-/* ── Result cards ── */
-.rsec{
-  font-size:11px;color:var(--text3);
-  text-transform:uppercase;letter-spacing:.06em;
-  font-weight:600;margin:14px 0 7px;
-}
+/* Reagent input cards */
+.rc-wrap{border:.5px solid var(--border-em);border-radius:var(--radius-lg);margin-bottom:10px;overflow:hidden}
+.rc-head{display:flex;align-items:center;gap:6px;padding:7px 10px;border-bottom:.5px solid var(--border)}
+.rc-name{flex:1;font-size:12px;font-weight:500;background:transparent;border:none;outline:none;font-family:inherit;min-width:0}
+.rc-body{padding:8px 10px 10px}
+.comp-row{display:grid;grid-template-columns:1fr 64px 36px 18px;gap:4px;align-items:center;margin-bottom:5px}
+.comp-row input{font-size:11px;padding:4px 5px}
+.comp-row select{font-size:11px;padding:3px 4px}
+.comp-conc{text-align:right}
+.comp-conc:disabled{opacity:.3}
+.color-dots{display:flex;gap:3px;flex-shrink:0}
+.cdot{width:10px;height:10px;border-radius:50%;cursor:pointer;transition:transform .1s}
+.cdot:hover{transform:scale(1.2)}
+.add-comp{font-size:10px;padding:2px 7px;border:.5px solid var(--border);border-radius:var(--radius);background:transparent;cursor:pointer;color:var(--text3);font-family:inherit;margin-top:3px}
+.add-comp:hover{background:var(--gray-bg);color:var(--text2)}
+/* Result */
+.rsec{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin:14px 0 7px}
 .rsec:first-child{margin-top:0}
-.rcard{
-  border:.5px solid var(--border);
-  border-radius:var(--radius-lg);
-  overflow:hidden;margin-bottom:9px;
-}
-.rhead{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:9px 14px;border-bottom:.5px solid;
-}
+.rcard{border:.5px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:9px}
+.rhead{display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:.5px solid}
 .rhead-l{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:500}
 .rbadge{font-family:var(--mono);font-size:14px;font-weight:600}
 .rbody{padding:8px 14px 6px}
-.rrow{
-  display:flex;justify-content:space-between;align-items:baseline;
-  padding:5px 0;border-bottom:.5px solid var(--border);font-size:13px;
-}
+.rrow{display:flex;justify-content:space-between;align-items:baseline;padding:5px 0;border-bottom:.5px solid var(--border);font-size:13px}
 .rrow:last-child{border:none}
 .rlbl{color:var(--text2)}
 .rval{font-family:var(--mono)}
 .rval.big{font-size:15px;font-weight:600}
 .rsub{font-size:11px;color:var(--text3);text-align:right}
-.rdivider{margin:7px 0 5px;padding-top:5px;border-top:.5px dashed var(--border)}
-.rdivider-lbl{font-size:11px;color:var(--text3);margin-bottom:5px}
-.tags{display:flex;gap:5px;flex-wrap:wrap}
-.tag{
-  font-size:11px;
-  background:var(--gray-bg);
-  border:.5px solid var(--border);
-  border-radius:var(--radius);
-  padding:2px 8px;color:var(--text2);
-}
-
-.c-blue{background:var(--accent-bg);border-color:var(--accent-bd);color:var(--accent-txt)}
-.c-teal{background:var(--teal-bg);border-color:var(--teal-bd);color:var(--teal-txt)}
-.c-amber{background:var(--amber-bg);border-color:var(--amber-bd);color:var(--amber-txt)}
-.c-gray{background:var(--gray-bg);border-color:var(--border);color:var(--text2)}
-
-.copy-btn{
-  display:flex;align-items:center;gap:6px;
-  font-size:12px;padding:7px 14px;
-  border:.5px solid var(--border-em);
-  border-radius:var(--radius);
-  background:transparent;cursor:pointer;
-  color:var(--text2);font-family:inherit;
-  margin-top:10px;transition:all .1s;
-}
+.tag{font-size:11px;background:var(--gray-bg);border:.5px solid var(--border);border-radius:var(--radius);padding:2px 8px;color:var(--text2)}
+.copy-btn{display:flex;align-items:center;gap:6px;font-size:12px;padding:7px 14px;border:.5px solid var(--border-em);border-radius:var(--radius);background:transparent;cursor:pointer;color:var(--text2);font-family:inherit;margin-top:10px;transition:all .1s}
 .copy-btn:hover{background:var(--gray-bg);color:var(--text)}
 .copy-btn.done{border-color:var(--teal-bd);color:var(--teal-txt);background:var(--teal-bg)}
-
-/* ── Responsive ── */
-@media(max-width:640px){
-  main{padding:1rem 1rem 4rem}
-  .panel{grid-template-columns:1fr}
-  header{padding:0 1rem}
-}
-
-/* ── Tabler icons ── */
-@import url('https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.x/dist/tabler-icons.min.css');
+@media(max-width:660px){main{padding:1rem 1rem 4rem}.panel{grid-template-columns:1fr}header{padding:0 1rem}}
 </style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.x/dist/tabler-icons.min.css">
 </head>
 <body>
-
 <header>
   <div class="logo">🧪</div>
   <span class="app-name">시약 계산기</span>
   <span class="app-desc">Reagent Volume Calculator</span>
   <div class="save-flash" id="save-flash">
-    <svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" fill="currentColor"/></svg>
+    <svg width="7" height="7" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" fill="currentColor"/></svg>
     자동 저장됨
   </div>
 </header>
-
-<main>
-  <div id="app"></div>
-</main>
+<main><div id="app"></div></main>
 
 <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <script type="text/babel">
-const { useState, useEffect, useCallback } = React;
-
+const { useState, useEffect } = React;
 let _n = 200;
 const uid = () => String(++_n);
 
@@ -363,115 +145,109 @@ const uid = () => String(++_n);
 function roundNice(v) {
   if (!v || v <= 0) return 0;
   if (v <= 5)    return Math.ceil(v);
-  if (v <= 20)   return Math.ceil(v/2)*2;
-  if (v <= 50)   return Math.ceil(v/5)*5;
-  if (v <= 100)  return Math.ceil(v/10)*10;
-  if (v <= 250)  return Math.ceil(v/25)*25;
-  if (v <= 1000) return Math.ceil(v/50)*50;
-  if (v <= 5000) return Math.ceil(v/100)*100;
-  return Math.ceil(v/500)*500;
+  if (v <= 20)   return Math.ceil(v / 2) * 2;
+  if (v <= 50)   return Math.ceil(v / 5) * 5;
+  if (v <= 100)  return Math.ceil(v / 10) * 10;
+  if (v <= 250)  return Math.ceil(v / 25) * 25;
+  if (v <= 1000) return Math.ceil(v / 50) * 50;
+  if (v <= 5000) return Math.ceil(v / 100) * 100;
+  return Math.ceil(v / 500) * 500;
 }
+const fV  = v  => { if (!v || v <= 0) return '0 mL'; if (v >= 1000) return `${+(v/1000).toFixed(1)} L`; return `${v} mL`; };
+const fM  = mg => { if (!mg || mg <= 0) return '0 mg'; if (mg >= 1000) return `${+(mg/1000).toFixed(2)} g`; return `${+mg.toFixed(1)} mg`; };
+const fUL = uL => { if (!uL || uL <= 0) return '0 μL'; if (uL < 0.1) return '< 0.1 μL'; if (uL >= 1000) return `${+(uL/1000).toFixed(2)} mL`; return `${+uL.toFixed(1)} μL`; };
+const fLiq = mL => { const uL = mL * 1000; return uL < 1000 ? fUL(uL) : fV(mL); };
 
-const fV = v => {
-  if (!v || v <= 0) return '0 mL';
-  if (v >= 1000) return `${+(v/1000).toFixed(1)} L`;
-  return `${v} mL`;
+// ── Accent palette ────────────────────────────────────────────────────────────
+const ACCENTS = ['blue','teal','amber','purple','rose','gray'];
+const AM = {
+  blue:   { bg:'var(--accent-bg)',  bd:'var(--accent-bd)',  txt:'var(--accent-txt)',  dot:'#3B82F6' },
+  teal:   { bg:'var(--teal-bg)',    bd:'var(--teal-bd)',    txt:'var(--teal-txt)',    dot:'#10B981' },
+  amber:  { bg:'var(--amber-bg)',   bd:'var(--amber-bd)',   txt:'var(--amber-txt)',   dot:'#F59E0B' },
+  purple: { bg:'var(--purple-bg)',  bd:'var(--purple-bd)',  txt:'var(--purple-txt)',  dot:'#8B5CF6' },
+  rose:   { bg:'var(--rose-bg)',    bd:'var(--rose-bd)',    txt:'var(--rose-txt)',    dot:'#F43F5E' },
+  gray:   { bg:'var(--gray-bg)',    bd:'var(--border-em)', txt:'var(--text2)',        dot:'#9CA3AF' },
 };
-const fM = mg => {
-  if (!mg || mg <= 0) return '0 mg';
-  if (mg >= 1000) return `${+(mg/1000).toFixed(2)} g`;
-  return `${Math.round(mg)} mg`;
-};
-const fMsub = mg => mg >= 1000 ? `(${Math.round(mg).toLocaleString()} mg)` : null;
-const fLiq = mL => {
-  if (!mL || mL <= 0) return '0 μL';
-  const uL = mL * 1000;
-  if (uL < 0.1) return '< 0.1 μL';
-  if (uL < 1000) return `${+uL.toFixed(1)} μL`;
-  return fV(mL);
-};
-const fTriton = uL => uL >= 1000 ? `${+(uL/1000).toFixed(2)} mL` : `${+uL.toFixed(1)} μL`;
+const getAM = a => AM[a] || AM.gray;
 
-// ── Default config ────────────────────────────────────────────────────────────
+// ── Default data ──────────────────────────────────────────────────────────────
+const mkComp = (name, type, conc) => ({ id: uid(), name, type, conc: String(conc) });
+const mkReag = (name, vol, accent, components) => ({ id: uid(), name, volPerSample: String(vol), accent, components });
+
 function defCfg() {
   return {
     samples: 8, surplus: 20,
-    washVol: 36, blockVol: 4,
+    reagents: [
+      mkReag('0.3% PBST', 44, 'blue', [
+        mkComp('Triton X-100', 'vv', 0.3),
+        mkComp('1× PBS', 'upto', ''),
+      ]),
+      mkReag('Blocking Buffer', 4, 'teal', [
+        mkComp('BSA', 'wv', 3),
+        mkComp('0.3% PBST', 'upto', ''),
+      ]),
+      mkReag('Ab Diluent', 4, 'amber', [
+        mkComp('BSA', 'wv', 1),
+        mkComp('0.3% PBST', 'upto', ''),
+      ]),
+    ],
     primaries:   [{ id: uid(), name: '1차 항체 #1', dilution: '500',  vol: '4' }],
     secondaries: [{ id: uid(), name: '2차 항체 #1', dilution: '1000', vol: '4' }],
   };
 }
 
 // ── Calculation ───────────────────────────────────────────────────────────────
-function calcIHC(cfg) {
-  const n  = Math.max(+cfg.samples || 0, 0);
-  const sf = 1 + Math.max(0, Math.min(+cfg.surplus || 0, 300)) / 100;
-  const wash  = roundNice(n * (+cfg.washVol  || 0) * sf);
-  const block = roundNice(n * (+cfg.blockVol || 0) * sf);
-  const calcList = list => list.map(ab => {
-    const adVol = roundNice(n * (+ab.vol || 0) * sf);
-    return { ...ab, adVol, stock: adVol / Math.max(+ab.dilution || 1, 1) };
+function calcReag(r, n, sf) {
+  const totalVol = roundNice(n * (+r.volPerSample || 0) * sf);
+  const comps = r.components.map(c => {
+    const conc = +c.conc || 0;
+    if (c.type === 'wv') {
+      // w/v %: mg = mL × conc% × 10
+      return { ...c, display: `${conc}% w/v`, result: fM(totalVol * conc * 10), isBig: true };
+    } else if (c.type === 'vv') {
+      // v/v %: μL = mL × conc% × 10
+      return { ...c, display: `${conc}% v/v`, result: fUL(totalVol * conc * 10), isBig: true };
+    } else {
+      return { ...c, display: 'up to', result: fV(totalVol), isBig: false };
+    }
   });
-  const pCalc   = calcList(cfg.primaries);
-  const sCalc   = calcList(cfg.secondaries);
-  const totalAD = [...pCalc, ...sCalc].reduce((s, a) => s + a.adVol, 0);
-  const pbst    = roundNice(wash + block + totalAD);
-  return {
-    wash, block, pbst,
-    tritonUL:   pbst * 3,
-    pbsPortion: pbst - pbst * 0.003,
-    blockBSAmg: block * 30,
-    adTotal: totalAD,
-    adBSAmg: totalAD * 10,
-    pCalc, sCalc,
-  };
+  return { ...r, totalVol, comps };
 }
 
 // ── Text export ───────────────────────────────────────────────────────────────
-function genText(name, cfg, r) {
-  const lines = [
-    `=== ${name} 시약 계산 결과 ===`,
-    `샘플 수: ${cfg.samples}개  |  여유분: +${cfg.surplus}%`,
-    '',
-    `[PBST  0.3% Triton X-100]  총 ${fV(r.pbst)}`,
-    `  · Triton X-100 : ${fTriton(r.tritonUL)}`,
-    `  · 1× PBS (up to): ${fV(r.pbsPortion)}`,
-    `  사용처: 세척 ${fV(r.wash)} / Blocking ${fV(r.block)} / Ab Diluent ${fV(r.adTotal)}`,
-    '',
-    `[Blocking Buffer  3% BSA in PBST]  총 ${fV(r.block)}`,
-    `  · BSA         : ${fM(r.blockBSAmg)}${fMsub(r.blockBSAmg) ? '  '+fMsub(r.blockBSAmg) : ''}`,
-    `  · 0.3% PBST (up to): ${fV(r.block)}`,
-    '',
-  ];
-  if (r.adTotal > 0) {
-    lines.push(
-      `[Ab Diluent  1% BSA in PBST]  총 ${fV(r.adTotal)}`,
-      `  · BSA         : ${fM(r.adBSAmg)}${fMsub(r.adBSAmg) ? '  '+fMsub(r.adBSAmg) : ''}`,
-      `  · 0.3% PBST (up to): ${fV(r.adTotal)}`,
-      '',
-    );
-  }
-  if (r.pCalc.length) {
+function genText(tabName, cfg) {
+  const n  = Math.max(+cfg.samples || 0, 0);
+  const sf = 1 + Math.max(0, Math.min(+cfg.surplus || 0, 300)) / 100;
+  const lines = [`=== ${tabName} 시약 계산 결과 ===`, `샘플 수: ${cfg.samples}개  |  여유분: +${cfg.surplus}%`, ''];
+  cfg.reagents.forEach(r => {
+    const res = calcReag(r, n, sf);
+    lines.push(`[${r.name}]  총 ${fV(res.totalVol)}`);
+    res.comps.forEach(c => lines.push(`  · ${c.name} (${c.display}): ${c.result}`));
+    lines.push('');
+  });
+  const calcAb = list => list.map(ab => {
+    const adVol = roundNice(n * (+ab.vol || 0) * sf);
+    return { ...ab, adVol, stock: adVol / Math.max(+ab.dilution || 1, 1) };
+  });
+  if (cfg.primaries.length) {
     lines.push('[1차 항체 working solution]');
-    r.pCalc.forEach(ab => {
+    calcAb(cfg.primaries).forEach(ab => {
       lines.push(`  ${ab.name}  (1:${ab.dilution})  → ${fV(ab.adVol)}`);
-      lines.push(`    · Ab Diluent     : ${fV(ab.adVol)}`);
-      lines.push(`    · 항체 stock 첨가량: ${fLiq(ab.stock)}`);
+      lines.push(`    · Ab Diluent: ${fV(ab.adVol)}  · stock 첨가량: ${fLiq(ab.stock)}`);
     });
     lines.push('');
   }
-  if (r.sCalc.length) {
+  if (cfg.secondaries.length) {
     lines.push('[2차 항체 working solution]');
-    r.sCalc.forEach(ab => {
+    calcAb(cfg.secondaries).forEach(ab => {
       lines.push(`  ${ab.name}  (1:${ab.dilution})  → ${fV(ab.adVol)}`);
-      lines.push(`    · Ab Diluent     : ${fV(ab.adVol)}`);
-      lines.push(`    · 항체 stock 첨가량: ${fLiq(ab.stock)}`);
+      lines.push(`    · Ab Diluent: ${fV(ab.adVol)}  · stock 첨가량: ${fLiq(ab.stock)}`);
     });
   }
   return lines.join('\n');
 }
 
-// ── Small components ──────────────────────────────────────────────────────────
+// ── Components ────────────────────────────────────────────────────────────────
 function RRow({ label, value, sub, bold }) {
   return (
     <div className="rrow">
@@ -484,17 +260,99 @@ function RRow({ label, value, sub, bold }) {
   );
 }
 
-function RCard({ accent, icon, title, badge, children }) {
+function ReagResultCard({ res }) {
+  const a = getAM(res.accent);
   return (
     <div className="rcard">
-      <div className={`rhead c-${accent}`}>
-        <div className="rhead-l">
-          <i className={`ti ${icon}`} aria-hidden="true" style={{fontSize:15}}/>
-          {title}
+      <div className="rhead" style={{background:a.bg, borderBottomColor:a.bd}}>
+        <div className="rhead-l" style={{color:a.txt}}>
+          <i className="ti ti-flask" style={{fontSize:15}} aria-hidden="true"/>
+          {res.name}
         </div>
-        {badge && <span className="rbadge">{badge}</span>}
+        <span className="rbadge" style={{color:a.txt}}>{fV(res.totalVol)}</span>
       </div>
-      <div className="rbody">{children}</div>
+      <div className="rbody">
+        {res.comps.map(c => (
+          <RRow key={c.id} label={`${c.name}  (${c.display})`} value={c.result} bold={c.isBig} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ReagInputCard({ r, onUpdate, onRemove, canRemove }) {
+  const a = getAM(r.accent);
+  const updComp = (id, patch) => onUpdate({ components: r.components.map(c => c.id === id ? { ...c, ...patch } : c) });
+  const delComp = id => onUpdate({ components: r.components.filter(c => c.id !== id) });
+  const addComp = () => onUpdate({ components: [...r.components, mkComp('성분', 'wv', '')] });
+
+  return (
+    <div className="rc-wrap">
+      {/* Header */}
+      <div className="rc-head" style={{background:a.bg, borderBottomColor:a.bd}}>
+        <div className="color-dots">
+          {ACCENTS.map(ac => (
+            <div key={ac} className="cdot"
+              style={{
+                background: AM[ac].dot,
+                boxShadow: r.accent === ac ? `0 0 0 2px ${AM[ac].dot}` : 'none',
+                outlineOffset: 2,
+              }}
+              onClick={() => onUpdate({ accent: ac })}
+              title={ac}
+            />
+          ))}
+        </div>
+        <input className="rc-name" type="text" value={r.name}
+          style={{color:a.txt}}
+          onChange={e => onUpdate({ name: e.target.value })}
+          placeholder="시약 이름" />
+        <div style={{display:'flex',alignItems:'center',gap:6,flexShrink:0}}>
+          <input type="number" value={r.volPerSample} min={0} step={0.5}
+            onChange={e => onUpdate({ volPerSample: e.target.value })}
+            style={{width:46,fontSize:11,textAlign:'right',padding:'2px 4px'}}/>
+          <span style={{fontSize:10,color:a.txt,opacity:.7}}>mL/샘</span>
+          {canRemove && (
+            <button onClick={onRemove}
+              style={{border:'none',background:'transparent',cursor:'pointer',
+                color:a.txt,opacity:.4,padding:0,fontSize:15,lineHeight:1,fontFamily:'inherit'}}
+              title="시약 삭제">×</button>
+          )}
+        </div>
+      </div>
+
+      {/* Components */}
+      <div className="rc-body">
+        <div style={{display:'grid',gridTemplateColumns:'1fr 64px 36px 18px',gap:4,marginBottom:4}}>
+          {['성분명','유형','농도',''].map((h,i)=>(
+            <span key={i} style={{fontSize:9,color:'var(--text3)',textAlign:i>=2?'right':'left'}}>{h}</span>
+          ))}
+        </div>
+        {r.components.map(c => (
+          <div key={c.id} className="comp-row">
+            <input type="text" value={c.name}
+              onChange={e => updComp(c.id, { name: e.target.value })}
+              placeholder="성분명" />
+            <select value={c.type}
+              onChange={e => updComp(c.id, { type: e.target.value })}>
+              <option value="wv">% w/v</option>
+              <option value="vv">% v/v</option>
+              <option value="upto">up to</option>
+            </select>
+            <input className="comp-conc" type="number"
+              value={c.type === 'upto' ? '' : c.conc}
+              disabled={c.type === 'upto'}
+              min={0} max={100} step={0.1}
+              onChange={e => updComp(c.id, { conc: e.target.value })}
+              placeholder={c.type === 'upto' ? '—' : ''}
+              style={{textAlign:'right', opacity: c.type==='upto' ? 0.3 : 1}} />
+            <button className="del-btn" onClick={() => delComp(c.id)} disabled={r.components.length <= 1} aria-label="성분 삭제">
+              <i className="ti ti-x" style={{fontSize:11}} aria-hidden="true"/>
+            </button>
+          </div>
+        ))}
+        <button className="add-comp" onClick={addComp}>+ 성분 추가</button>
+      </div>
     </div>
   );
 }
@@ -502,16 +360,13 @@ function RCard({ accent, icon, title, badge, children }) {
 function AbRow({ ab, onUpdate, onRemove, canRemove }) {
   return (
     <div className="ab-row">
-      <input type="text" value={ab.name}
-        onChange={e => onUpdate({ name: e.target.value })} />
+      <input type="text" value={ab.name} onChange={e => onUpdate({ name: e.target.value })} />
       <div className="dil-wrap">
         <span>1:</span>
-        <input type="number" value={ab.dilution} min={1}
-          onChange={e => onUpdate({ dilution: e.target.value })} />
+        <input type="number" value={ab.dilution} min={1} onChange={e => onUpdate({ dilution: e.target.value })} />
       </div>
       <input type="number" value={ab.vol} min={0} step={0.5}
-        onChange={e => onUpdate({ vol: e.target.value })}
-        style={{textAlign:'right'}} />
+        onChange={e => onUpdate({ vol: e.target.value })} style={{textAlign:'right'}} />
       <button className="del-btn" onClick={onRemove} disabled={!canRemove} aria-label="삭제">
         <i className="ti ti-x" style={{fontSize:13}} aria-hidden="true"/>
       </button>
@@ -519,110 +374,118 @@ function AbRow({ ab, onUpdate, onRemove, canRemove }) {
   );
 }
 
-// ── IHC Panel ────────────────────────────────────────────────────────────────
-function IHCPanel({ cfg, onChange }) {
+// ── Main panel ────────────────────────────────────────────────────────────────
+function IHCPanel({ tabName, cfg, onChange }) {
   const [sampleStr, setSampleStr] = useState(String(cfg.samples));
   const [copied, setCopied]       = useState(false);
 
+  const n  = Math.max(+cfg.samples || 0, 0);
+  const sf = 1 + Math.max(0, Math.min(+cfg.surplus || 0, 300)) / 100;
+
+  const calcAb = list => list.map(ab => {
+    const adVol = roundNice(n * (+ab.vol || 0) * sf);
+    return { ...ab, adVol, stock: adVol / Math.max(+ab.dilution || 1, 1) };
+  });
+  const pCalc = calcAb(cfg.primaries);
+  const sCalc = calcAb(cfg.secondaries);
+
   const commitSamples = raw => {
-    const n = parseInt(raw, 10);
-    const final = isNaN(n) || n < 1 ? 1 : n;
+    const parsed = parseInt(raw, 10);
+    const final  = isNaN(parsed) || parsed < 1 ? 1 : parsed;
     setSampleStr(String(final));
     onChange({ samples: final });
   };
-
   const stepSamples = delta => {
-    const n = Math.max(1, (+cfg.samples || 1) + delta);
-    setSampleStr(String(n));
-    onChange({ samples: n });
+    const next = Math.max(1, (+cfg.samples || 1) + delta);
+    setSampleStr(String(next));
+    onChange({ samples: next });
   };
 
+  // Reagent CRUD
+  const updReag = (id, patch) => onChange({ reagents: cfg.reagents.map(r => r.id===id ? {...r,...patch} : r) });
+  const delReag = id => onChange({ reagents: cfg.reagents.filter(r => r.id !== id) });
+  const addReag = () => {
+    const accent = ACCENTS[cfg.reagents.length % ACCENTS.length];
+    onChange({ reagents: [...cfg.reagents, mkReag(`시약 ${cfg.reagents.length+1}`, 4, accent, [
+      mkComp('성분 1', 'wv', ''),
+      mkComp('용매', 'upto', ''),
+    ])]});
+  };
+
+  // Ab CRUD
   const updAb = (type, id, patch) => {
-    const k = type === 'p' ? 'primaries' : 'secondaries';
-    onChange({ [k]: cfg[k].map(a => a.id === id ? { ...a, ...patch } : a) });
+    const k = type==='p' ? 'primaries' : 'secondaries';
+    onChange({ [k]: cfg[k].map(a => a.id===id ? {...a,...patch} : a) });
   };
   const delAb = (type, id) => {
-    const k = type === 'p' ? 'primaries' : 'secondaries';
+    const k = type==='p' ? 'primaries' : 'secondaries';
     onChange({ [k]: cfg[k].filter(a => a.id !== id) });
   };
   const addAb = type => {
-    const k = type === 'p' ? 'primaries' : 'secondaries';
-    const n = cfg[k].length + 1;
-    onChange({ [k]: [...cfg[k], {
-      id: uid(),
-      name: `${type === 'p' ? '1차' : '2차'} 항체 #${n}`,
-      dilution: type === 'p' ? '500' : '1000',
-      vol: '4',
-    }]});
+    const k = type==='p' ? 'primaries' : 'secondaries';
+    const n2 = cfg[k].length + 1;
+    onChange({ [k]: [...cfg[k], { id:uid(), name:`${type==='p'?'1차':'2차'} 항체 #${n2}`, dilution:type==='p'?'500':'1000', vol:'4' }] });
   };
 
-  const r = calcIHC(cfg);
-  const SPRESETS = [10, 20, 30];
+  const reagResults = cfg.reagents.map(r => calcReag(r, n, sf));
 
   return (
     <div className="panel">
-      {/* ── INPUTS ── */}
+      {/* ── LEFT: INPUTS ── */}
       <div>
-        <div className="sec">기본 설정</div>
+        <div className="sec" style={{marginTop:0}}>기본 설정</div>
 
-        {/* Samples */}
         <div className="frow">
           <label>샘플 수</label>
           <div className="sample-row">
-            <button className="step-btn" onClick={() => stepSamples(-1)} aria-label="감소">–</button>
-            <input
-              className="sample-input"
-              type="text" inputMode="numeric"
+            <button className="step-btn" onClick={() => stepSamples(-1)}>–</button>
+            <input className="sample-input" type="text" inputMode="numeric"
               value={sampleStr}
-              onChange={e => {
-                setSampleStr(e.target.value);
-                const n = parseInt(e.target.value, 10);
-                if (!isNaN(n) && n >= 1) onChange({ samples: n });
-              }}
+              onChange={e => { setSampleStr(e.target.value); const v=parseInt(e.target.value,10); if(!isNaN(v)&&v>=1) onChange({samples:v}); }}
               onBlur={e => commitSamples(e.target.value)}
-              onKeyDown={e => { if (e.key === 'Enter') e.target.blur(); }}
-              aria-label="샘플 수"
-            />
-            <button className="step-btn" onClick={() => stepSamples(1)} aria-label="증가">+</button>
+              onKeyDown={e => { if(e.key==='Enter') e.target.blur(); }} />
+            <button className="step-btn" onClick={() => stepSamples(1)}>+</button>
             <span className="unit">개</span>
           </div>
         </div>
 
-        {/* Surplus */}
         <div className="frow">
           <label>여유분</label>
           <div className="s-grp">
-            {SPRESETS.map(s => (
-              <button key={s} className={`s-btn${cfg.surplus === s ? ' on' : ''}`}
-                onClick={() => onChange({ surplus: s })}>+{s}%</button>
+            {[10,20,30].map(s => (
+              <button key={s} className={`s-btn${cfg.surplus===s?' on':''}`} onClick={() => onChange({surplus:s})}>+{s}%</button>
             ))}
             <input className="surplus-n" type="number" value={cfg.surplus} min={0} max={200}
-              onChange={e => onChange({ surplus: +e.target.value })} />
+              onChange={e => onChange({surplus:+e.target.value})} />
             <span className="unit">%</span>
           </div>
         </div>
 
-        <div className="sec">샘플당 기본 용량</div>
-        {[{label:'PBST (세척)', key:'washVol'}, {label:'Blocking buffer', key:'blockVol'}].map(({ label, key }) => (
-          <div key={key} className="vol-row">
-            <label>{label}</label>
-            <div className="vol-right">
-              <input type="number" value={cfg[key]} min={0} step={1}
-                onChange={e => onChange({ [key]: +e.target.value })} />
-              <span className="unit">mL</span>
-            </div>
-          </div>
+        {/* Reagents */}
+        <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginTop:18,marginBottom:10}}>
+          <div className="sec" style={{margin:0}}>조제 시약</div>
+          <button className="add-ab" onClick={addReag}>
+            <i className="ti ti-plus" style={{fontSize:11}} aria-hidden="true"/> 시약 추가
+          </button>
+        </div>
+        {cfg.reagents.map(r => (
+          <ReagInputCard key={r.id} r={r}
+            onUpdate={p => updReag(r.id, p)}
+            onRemove={() => delReag(r.id)}
+            canRemove={cfg.reagents.length > 1} />
         ))}
 
-        {/* Primary abs */}
-        <div className="ab-hdr-row">
-          <div className="sec">1차 항체</div>
+        {/* Antibodies */}
+        <div className="ab-hdr-row" style={{marginTop:18}}>
+          <div className="sec" style={{margin:0}}>1차 항체</div>
           <button className="add-ab" onClick={() => addAb('p')}>
             <i className="ti ti-plus" style={{fontSize:11}} aria-hidden="true"/> 추가
           </button>
         </div>
         <div className="ab-cols">
-          <span>이름</span><span>희석배율</span><span>mL/샘</span><span/>
+          {['이름','희석배율','mL/샘',''].map((h,i) => (
+            <span key={i} style={{textAlign:i>=1?'right':'left'}}>{h}</span>
+          ))}
         </div>
         {cfg.primaries.map(ab => (
           <AbRow key={ab.id} ab={ab}
@@ -631,9 +494,8 @@ function IHCPanel({ cfg, onChange }) {
             canRemove={cfg.primaries.length > 1} />
         ))}
 
-        {/* Secondary abs */}
-        <div className="ab-hdr-row">
-          <div className="sec">2차 항체</div>
+        <div className="ab-hdr-row" style={{marginTop:14}}>
+          <div className="sec" style={{margin:0}}>2차 항체</div>
           <button className="add-ab" onClick={() => addAb('s')}>
             <i className="ti ti-plus" style={{fontSize:11}} aria-hidden="true"/> 추가
           </button>
@@ -646,64 +508,51 @@ function IHCPanel({ cfg, onChange }) {
         ))}
       </div>
 
-      {/* ── RESULTS ── */}
+      {/* ── RIGHT: RESULTS ── */}
       <div>
         <div className="rsec">계산 결과</div>
 
-        <RCard accent="blue" icon="ti-flask" title="PBST  (0.3% Triton X-100 in 1× PBS)" badge={fV(r.pbst)}>
-          <RRow label="Triton X-100" value={fTriton(r.tritonUL)} />
-          <RRow label="1× PBS (up to)" value={fV(r.pbsPortion)} />
-          <div className="rdivider">
-            <div className="rdivider-lbl">사용처 (참고)</div>
-            <div className="tags">
-              <span className="tag">세척: {fV(r.wash)}</span>
-              <span className="tag">Blocking: {fV(r.block)}</span>
-              <span className="tag">Ab Diluent: {fV(r.adTotal)}</span>
-            </div>
-          </div>
-        </RCard>
+        {reagResults.map(res => <ReagResultCard key={res.id} res={res} />)}
 
-        <RCard accent="teal" icon="ti-droplet" title="Blocking Buffer  (3% BSA in 0.3% PBST)" badge={fV(r.block)}>
-          <RRow label="BSA" value={fM(r.blockBSAmg)} sub={fMsub(r.blockBSAmg)} />
-          <RRow label="0.3% PBST (up to)" value={fV(r.block)} />
-        </RCard>
-
-        {r.adTotal > 0 && (
-          <RCard accent="amber" icon="ti-droplet-half-2" title="Ab Diluent  (1% BSA in 0.3% PBST)" badge={fV(r.adTotal)}>
-            <RRow label="BSA" value={fM(r.adBSAmg)} sub={fMsub(r.adBSAmg)} />
-            <RRow label="0.3% PBST (up to)" value={fV(r.adTotal)} />
-          </RCard>
-        )}
-
-        {r.pCalc.length > 0 && <>
+        {pCalc.length > 0 && <>
           <div className="rsec">1차 항체 working solution</div>
-          {r.pCalc.map(ab => (
-            <RCard key={ab.id} accent="gray" icon="ti-circle-dot" title={ab.name} badge={`1:${ab.dilution}`}>
-              <RRow label="Ab Diluent 사용량" value={fV(ab.adVol)} />
-              <RRow label="항체 stock 첨가량" value={fLiq(ab.stock)} bold />
-            </RCard>
+          {pCalc.map(ab => (
+            <div key={ab.id} className="rcard">
+              <div className="rhead" style={{background:'var(--gray-bg)',borderBottomColor:'var(--border-em)'}}>
+                <div className="rhead-l"><i className="ti ti-circle-dot" style={{fontSize:15}} aria-hidden="true"/>{ab.name}</div>
+                <span className="rbadge">1:{ab.dilution}</span>
+              </div>
+              <div className="rbody">
+                <RRow label="Ab Diluent 사용량" value={fV(ab.adVol)} />
+                <RRow label="항체 stock 첨가량" value={fLiq(ab.stock)} bold />
+              </div>
+            </div>
           ))}
         </>}
 
-        {r.sCalc.length > 0 && <>
+        {sCalc.length > 0 && <>
           <div className="rsec">2차 항체 working solution</div>
-          {r.sCalc.map(ab => (
-            <RCard key={ab.id} accent="gray" icon="ti-circle" title={ab.name} badge={`1:${ab.dilution}`}>
-              <RRow label="Ab Diluent 사용량" value={fV(ab.adVol)} />
-              <RRow label="항체 stock 첨가량" value={fLiq(ab.stock)} bold />
-            </RCard>
+          {sCalc.map(ab => (
+            <div key={ab.id} className="rcard">
+              <div className="rhead" style={{background:'var(--gray-bg)',borderBottomColor:'var(--border-em)'}}>
+                <div className="rhead-l"><i className="ti ti-circle" style={{fontSize:15}} aria-hidden="true"/>{ab.name}</div>
+                <span className="rbadge">1:{ab.dilution}</span>
+              </div>
+              <div className="rbody">
+                <RRow label="Ab Diluent 사용량" value={fV(ab.adVol)} />
+                <RRow label="항체 stock 첨가량" value={fLiq(ab.stock)} bold />
+              </div>
+            </div>
           ))}
         </>}
 
-        <button
-          className={`copy-btn${copied ? ' done' : ''}`}
+        <button className={`copy-btn${copied?' done':''}`}
           onClick={() => {
-            navigator.clipboard.writeText(genText('IHC', cfg, r)).then(() => {
-              setCopied(true);
-              setTimeout(() => setCopied(false), 2000);
+            navigator.clipboard.writeText(genText(tabName, cfg)).then(() => {
+              setCopied(true); setTimeout(() => setCopied(false), 2000);
             });
           }}>
-          <i className={`ti ${copied ? 'ti-check' : 'ti-copy'}`} style={{fontSize:14}} aria-hidden="true"/>
+          <i className={`ti ${copied?'ti-check':'ti-copy'}`} style={{fontSize:14}} aria-hidden="true"/>
           {copied ? '복사됨 ✓' : '레시피 텍스트 복사'}
         </button>
       </div>
@@ -712,17 +561,14 @@ function IHCPanel({ cfg, onChange }) {
 }
 
 // ── App ───────────────────────────────────────────────────────────────────────
-const STORAGE_KEY = 'reagent-calc-v1';
+const STORAGE_KEY = 'reagent-calc-v2';
 
 function loadTabs() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw);
-  } catch {}
+  try { const r = localStorage.getItem(STORAGE_KEY); if (r) return JSON.parse(r); } catch {}
   return null;
 }
 
-function showSaveFlash() {
+function showFlash() {
   const el = document.getElementById('save-flash');
   if (!el) return;
   el.classList.add('show');
@@ -731,38 +577,33 @@ function showSaveFlash() {
 }
 
 function App() {
-  const init = loadTabs() || [{ id: 't1', name: 'IHC', cfg: defCfg() }];
+  const init    = loadTabs() || [{ id:'t1', name:'IHC', cfg: defCfg() }];
   const [tabs,   setTabs]   = useState(init);
   const [active, setActive] = useState(init[0].id);
   const [editId, setEditId] = useState(null);
   const [editName, setEditName] = useState('');
 
-  // Persist on change
   useEffect(() => {
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(tabs)); } catch {}
-    showSaveFlash();
+    showFlash();
   }, [tabs]);
 
   const tab    = tabs.find(t => t.id === active);
-  const updCfg = patch => setTabs(ts =>
-    ts.map(t => t.id === active ? { ...t, cfg: { ...t.cfg, ...patch } } : t));
+  const updCfg = patch => setTabs(ts => ts.map(t => t.id===active ? {...t, cfg:{...t.cfg,...patch}} : t));
 
   const addTab = () => {
     const id = `t${uid()}`;
-    setTabs(ts => [...ts, { id, name: `실험 ${ts.length + 1}`, cfg: defCfg() }]);
+    setTabs(ts => [...ts, { id, name:`프로토콜 ${ts.length+1}`, cfg:defCfg() }]);
     setActive(id);
   };
-
   const remTab = id => {
     if (tabs.length === 1) return;
     const next = tabs.filter(t => t.id !== id);
     setTabs(next);
-    if (active === id) setActive(next[next.length - 1].id);
+    if (active === id) setActive(next[next.length-1].id);
   };
-
   const finishEdit = () => {
-    if (editName.trim())
-      setTabs(ts => ts.map(t => t.id === editId ? { ...t, name: editName.trim() } : t));
+    if (editName.trim()) setTabs(ts => ts.map(t => t.id===editId ? {...t, name:editName.trim()} : t));
     setEditId(null);
   };
 
@@ -772,22 +613,17 @@ function App() {
         {tabs.map(t => (
           <div key={t.id}>
             {editId === t.id ? (
-              <input
-                autoFocus className="tab-edit-input"
-                value={editName}
+              <input autoFocus className="tab-edit-input" value={editName}
                 onChange={e => setEditName(e.target.value)}
                 onBlur={finishEdit}
-                onKeyDown={e => { if (e.key === 'Enter') finishEdit(); if (e.key === 'Escape') setEditId(null); }}
-              />
+                onKeyDown={e => { if(e.key==='Enter') finishEdit(); if(e.key==='Escape') setEditId(null); }} />
             ) : (
-              <button
-                className={`tab-btn${active === t.id ? ' on' : ''}`}
+              <button className={`tab-btn${active===t.id?' on':''}`}
                 onClick={() => setActive(t.id)}
                 onDoubleClick={() => { setEditId(t.id); setEditName(t.name); }}>
                 {t.name}
                 {tabs.length > 1 && (
-                  <span className="tab-x"
-                    onClick={e => { e.stopPropagation(); remTab(t.id); }}>×</span>
+                  <span className="tab-x" onClick={e => { e.stopPropagation(); remTab(t.id); }}>×</span>
                 )}
               </button>
             )}
@@ -797,8 +633,7 @@ function App() {
           <i className="ti ti-plus" style={{fontSize:12}} aria-hidden="true"/> 프로토콜 추가
         </button>
       </div>
-
-      {tab && <IHCPanel key={active} cfg={tab.cfg} onChange={updCfg} />}
+      {tab && <IHCPanel key={active} tabName={tab.name} cfg={tab.cfg} onChange={updCfg} />}
     </>
   );
 }
