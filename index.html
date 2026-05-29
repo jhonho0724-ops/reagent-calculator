@@ -191,8 +191,6 @@ function defCfg() {
         mkComp('0.3% PBST', 'upto', ''),
       ]),
     ],
-    primaries:   [{ id: uid(), name: '1차 항체 #1', dilution: '500',  vol: '4' }],
-    secondaries: [{ id: uid(), name: '2차 항체 #1', dilution: '1000', vol: '4' }],
   };
 }
 
@@ -225,25 +223,6 @@ function genText(tabName, cfg) {
     res.comps.forEach(c => lines.push(`  · ${c.name} (${c.display}): ${c.result}`));
     lines.push('');
   });
-  const calcAb = list => list.map(ab => {
-    const adVol = roundNice(n * (+ab.vol || 0) * sf);
-    return { ...ab, adVol, stock: adVol / Math.max(+ab.dilution || 1, 1) };
-  });
-  if (cfg.primaries.length) {
-    lines.push('[1차 항체 working solution]');
-    calcAb(cfg.primaries).forEach(ab => {
-      lines.push(`  ${ab.name}  (1:${ab.dilution})  → ${fV(ab.adVol)}`);
-      lines.push(`    · Ab Diluent: ${fV(ab.adVol)}  · stock 첨가량: ${fLiq(ab.stock)}`);
-    });
-    lines.push('');
-  }
-  if (cfg.secondaries.length) {
-    lines.push('[2차 항체 working solution]');
-    calcAb(cfg.secondaries).forEach(ab => {
-      lines.push(`  ${ab.name}  (1:${ab.dilution})  → ${fV(ab.adVol)}`);
-      lines.push(`    · Ab Diluent: ${fV(ab.adVol)}  · stock 첨가량: ${fLiq(ab.stock)}`);
-    });
-  }
   return lines.join('\n');
 }
 
@@ -357,22 +336,6 @@ function ReagInputCard({ r, onUpdate, onRemove, canRemove }) {
   );
 }
 
-function AbRow({ ab, onUpdate, onRemove, canRemove }) {
-  return (
-    <div className="ab-row">
-      <input type="text" value={ab.name} onChange={e => onUpdate({ name: e.target.value })} />
-      <div className="dil-wrap">
-        <span>1:</span>
-        <input type="number" value={ab.dilution} min={1} onChange={e => onUpdate({ dilution: e.target.value })} />
-      </div>
-      <input type="number" value={ab.vol} min={0} step={0.5}
-        onChange={e => onUpdate({ vol: e.target.value })} style={{textAlign:'right'}} />
-      <button className="del-btn" onClick={onRemove} disabled={!canRemove} aria-label="삭제">
-        <i className="ti ti-x" style={{fontSize:13}} aria-hidden="true"/>
-      </button>
-    </div>
-  );
-}
 
 // ── Main panel ────────────────────────────────────────────────────────────────
 function IHCPanel({ tabName, cfg, onChange }) {
@@ -381,13 +344,6 @@ function IHCPanel({ tabName, cfg, onChange }) {
 
   const n  = Math.max(+cfg.samples || 0, 0);
   const sf = 1 + Math.max(0, Math.min(+cfg.surplus || 0, 300)) / 100;
-
-  const calcAb = list => list.map(ab => {
-    const adVol = roundNice(n * (+ab.vol || 0) * sf);
-    return { ...ab, adVol, stock: adVol / Math.max(+ab.dilution || 1, 1) };
-  });
-  const pCalc = calcAb(cfg.primaries);
-  const sCalc = calcAb(cfg.secondaries);
 
   const commitSamples = raw => {
     const parsed = parseInt(raw, 10);
@@ -410,21 +366,6 @@ function IHCPanel({ tabName, cfg, onChange }) {
       mkComp('성분 1', 'wv', ''),
       mkComp('용매', 'upto', ''),
     ])]});
-  };
-
-  // Ab CRUD
-  const updAb = (type, id, patch) => {
-    const k = type==='p' ? 'primaries' : 'secondaries';
-    onChange({ [k]: cfg[k].map(a => a.id===id ? {...a,...patch} : a) });
-  };
-  const delAb = (type, id) => {
-    const k = type==='p' ? 'primaries' : 'secondaries';
-    onChange({ [k]: cfg[k].filter(a => a.id !== id) });
-  };
-  const addAb = type => {
-    const k = type==='p' ? 'primaries' : 'secondaries';
-    const n2 = cfg[k].length + 1;
-    onChange({ [k]: [...cfg[k], { id:uid(), name:`${type==='p'?'1차':'2차'} 항체 #${n2}`, dilution:type==='p'?'500':'1000', vol:'4' }] });
   };
 
   const reagResults = cfg.reagents.map(r => calcReag(r, n, sf));
@@ -474,38 +415,6 @@ function IHCPanel({ tabName, cfg, onChange }) {
             onRemove={() => delReag(r.id)}
             canRemove={cfg.reagents.length > 1} />
         ))}
-
-        {/* Antibodies */}
-        <div className="ab-hdr-row" style={{marginTop:18}}>
-          <div className="sec" style={{margin:0}}>1차 항체</div>
-          <button className="add-ab" onClick={() => addAb('p')}>
-            <i className="ti ti-plus" style={{fontSize:11}} aria-hidden="true"/> 추가
-          </button>
-        </div>
-        <div className="ab-cols">
-          {['이름','희석배율','mL/샘',''].map((h,i) => (
-            <span key={i} style={{textAlign:i>=1?'right':'left'}}>{h}</span>
-          ))}
-        </div>
-        {cfg.primaries.map(ab => (
-          <AbRow key={ab.id} ab={ab}
-            onUpdate={p => updAb('p', ab.id, p)}
-            onRemove={() => delAb('p', ab.id)}
-            canRemove={cfg.primaries.length > 1} />
-        ))}
-
-        <div className="ab-hdr-row" style={{marginTop:14}}>
-          <div className="sec" style={{margin:0}}>2차 항체</div>
-          <button className="add-ab" onClick={() => addAb('s')}>
-            <i className="ti ti-plus" style={{fontSize:11}} aria-hidden="true"/> 추가
-          </button>
-        </div>
-        {cfg.secondaries.map(ab => (
-          <AbRow key={ab.id} ab={ab}
-            onUpdate={p => updAb('s', ab.id, p)}
-            onRemove={() => delAb('s', ab.id)}
-            canRemove={cfg.secondaries.length > 1} />
-        ))}
       </div>
 
       {/* ── RIGHT: RESULTS ── */}
@@ -513,38 +422,6 @@ function IHCPanel({ tabName, cfg, onChange }) {
         <div className="rsec">계산 결과</div>
 
         {reagResults.map(res => <ReagResultCard key={res.id} res={res} />)}
-
-        {pCalc.length > 0 && <>
-          <div className="rsec">1차 항체 working solution</div>
-          {pCalc.map(ab => (
-            <div key={ab.id} className="rcard">
-              <div className="rhead" style={{background:'var(--gray-bg)',borderBottomColor:'var(--border-em)'}}>
-                <div className="rhead-l"><i className="ti ti-circle-dot" style={{fontSize:15}} aria-hidden="true"/>{ab.name}</div>
-                <span className="rbadge">1:{ab.dilution}</span>
-              </div>
-              <div className="rbody">
-                <RRow label="Ab Diluent 사용량" value={fV(ab.adVol)} />
-                <RRow label="항체 stock 첨가량" value={fLiq(ab.stock)} bold />
-              </div>
-            </div>
-          ))}
-        </>}
-
-        {sCalc.length > 0 && <>
-          <div className="rsec">2차 항체 working solution</div>
-          {sCalc.map(ab => (
-            <div key={ab.id} className="rcard">
-              <div className="rhead" style={{background:'var(--gray-bg)',borderBottomColor:'var(--border-em)'}}>
-                <div className="rhead-l"><i className="ti ti-circle" style={{fontSize:15}} aria-hidden="true"/>{ab.name}</div>
-                <span className="rbadge">1:{ab.dilution}</span>
-              </div>
-              <div className="rbody">
-                <RRow label="Ab Diluent 사용량" value={fV(ab.adVol)} />
-                <RRow label="항체 stock 첨가량" value={fLiq(ab.stock)} bold />
-              </div>
-            </div>
-          ))}
-        </>}
 
         <button className={`copy-btn${copied?' done':''}`}
           onClick={() => {
@@ -561,7 +438,7 @@ function IHCPanel({ tabName, cfg, onChange }) {
 }
 
 // ── App ───────────────────────────────────────────────────────────────────────
-const STORAGE_KEY = 'reagent-calc-v2';
+const STORAGE_KEY = 'reagent-calc-v3';
 
 function loadTabs() {
   try { const r = localStorage.getItem(STORAGE_KEY); if (r) return JSON.parse(r); } catch {}
