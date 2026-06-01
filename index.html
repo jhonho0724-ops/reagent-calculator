@@ -89,11 +89,15 @@ input[type=number]::-webkit-inner-spin-button{opacity:.4}
 .rc-head{display:flex;align-items:center;gap:6px;padding:7px 10px;border-bottom:.5px solid var(--border)}
 .rc-name{flex:1;font-size:12px;font-weight:500;background:transparent;border:none;outline:none;font-family:inherit;min-width:0}
 .rc-body{padding:8px 10px 10px}
-.comp-row{display:grid;grid-template-columns:1fr 64px 36px 18px;gap:4px;align-items:center;margin-bottom:5px}
+.comp-row{margin-bottom:8px}
+.comp-row-top{display:grid;grid-template-columns:1fr 18px;gap:4px;align-items:center;margin-bottom:3px}
+.comp-row-mid{display:grid;grid-template-columns:72px 1fr;gap:4px;margin-bottom:3px}
 .comp-row input{font-size:11px;padding:4px 5px}
-.comp-row select{font-size:11px;padding:3px 4px}
-.comp-conc{text-align:right}
+.comp-row select{font-size:11px;padding:3px 4px;width:100%}
+.comp-conc-row{display:flex;gap:4px;align-items:center}
+.comp-conc{flex:1;min-width:0;text-align:right;font-size:11px;padding:4px 5px!important}
 .comp-conc:disabled{opacity:.3}
+.comp-sub{display:grid;grid-template-columns:68px 1fr;gap:4px;margin-bottom:4px}
 .color-dots{display:flex;gap:3px;flex-shrink:0}
 .cdot{width:10px;height:10px;border-radius:50%;cursor:pointer;transition:transform .1s}
 .cdot:hover{transform:scale(1.2)}
@@ -216,6 +220,10 @@ function calcReag(r, n, sf) {
       const mg = calcMolMg(c.conc, unit, c.mw, totalVol);
       const label = `${conc} ${unit}`;
       return { ...c, display: label, result: mg != null ? fM(mg) : '(MW 입력 필요)', isBig: mg != null };
+    } else if (c.type === 'dil') {
+      const ratio = +c.dilRatio || 0;
+      const stockVol = ratio > 0 ? totalVol / ratio : 0;
+      return { ...c, display: `1:${ratio || '?'}`, result: stockVol > 0 ? fLiq(stockVol) : '(배수 입력 필요)', isBig: stockVol > 0 };
     } else {
       return { ...c, display: 'up to', result: fV(totalVol), isBig: false };
     }
@@ -232,8 +240,10 @@ function genText(tabName, cfg) {
     const res = calcReag(r, n, sf);
     lines.push(`[${r.name}]  총 ${fV(res.totalVol)}`);
     res.comps.forEach(c => {
-      const mwNote = c.type==='mol' && c.mw ? `  MW=${c.mw} g/mol` : '';
-      lines.push(`  · ${c.name} (${c.display})${mwNote}: ${c.result}`);
+      let note = '';
+      if (c.type === 'mol' && c.mw) note = `  MW=${c.mw} g/mol`;
+      if (c.type === 'dil') note = `  (1:${c.dilRatio||'?'})`;
+      lines.push(`  · ${c.name} (${c.display})${note}: ${c.result}`);
     });
     lines.push('');
   });
@@ -316,51 +326,80 @@ function ReagInputCard({ r, onUpdate, onRemove, canRemove }) {
 
       {/* Components */}
       <div className="rc-body">
-        <div style={{display:'grid',gridTemplateColumns:'1fr 64px 36px 18px',gap:4,marginBottom:4}}>
-          {['성분명','유형','농도',''].map((h,i)=>(
-            <span key={i} style={{fontSize:9,color:'var(--text3)',textAlign:i>=2?'right':'left'}}>{h}</span>
-          ))}
+        <div style={{display:'grid',gridTemplateColumns:'1fr 18px',gap:4,marginBottom:4}}>
+          <span style={{fontSize:9,color:'var(--text3)'}}>성분명 · 유형 · 값</span>
+          <span/>
         </div>
         {r.components.map(c => (
-          <div key={c.id}>
-            <div className="comp-row">
+          <div key={c.id} className="comp-row">
+            {/* Row 1: name + delete */}
+            <div className="comp-row-top">
               <input type="text" value={c.name}
                 onChange={e => updComp(c.id, { name: e.target.value })}
-                placeholder="성분명" />
-              <select value={c.type}
-                onChange={e => updComp(c.id, { type: e.target.value })}>
-                <option value="wv">% w/v</option>
-                <option value="vv">% v/v</option>
-                <option value="mol">몰농도</option>
-                <option value="upto">up to</option>
-              </select>
-              <input className="comp-conc" type="number"
-                value={c.type === 'upto' ? '' : c.conc}
-                disabled={c.type === 'upto'}
-                min={0} step={c.type==='mol'?0.1:0.01}
-                onChange={e => updComp(c.id, { conc: e.target.value })}
-                placeholder={c.type === 'upto' ? '—' : ''}
-                style={{textAlign:'right', opacity: c.type==='upto' ? 0.3 : 1}} />
+                placeholder="성분명" style={{width:'100%'}}/>
               <button className="del-btn" onClick={() => delComp(c.id)} disabled={r.components.length <= 1} aria-label="성분 삭제">
                 <i className="ti ti-x" style={{fontSize:11}} aria-hidden="true"/>
               </button>
             </div>
-            {c.type === 'mol' && (
-              <div style={{display:'grid',gridTemplateColumns:'60px 1fr',gap:4,marginBottom:5,paddingLeft:2}}>
-                <select value={c.molUnit || 'mM'}
-                  onChange={e => updComp(c.id, { molUnit: e.target.value })}
-                  style={{fontSize:11,padding:'3px 4px'}}>
-                  <option value="M">M</option>
-                  <option value="mM">mM</option>
-                  <option value="uM">μM</option>
+            {/* Row 2: type + value(s) */}
+            {c.type !== 'upto' ? (
+              <div className="comp-row-mid">
+                <select value={c.type} onChange={e => updComp(c.id, { type: e.target.value })}>
+                  <option value="wv">% w/v</option>
+                  <option value="vv">% v/v</option>
+                  <option value="mol">몰농도</option>
+                  <option value="dil">희석배수</option>
+                  <option value="upto">up to</option>
                 </select>
-                <div style={{display:'flex',alignItems:'center',gap:4}}>
-                  <input type="number" value={c.mw||''} min={0} step={0.1}
-                    onChange={e => updComp(c.id, { mw: e.target.value })}
-                    placeholder="MW (g/mol)"
-                    style={{flex:1,fontSize:11,padding:'3px 5px'}} />
-                  <span style={{fontSize:10,color:'var(--text3)',flexShrink:0}}>g/mol</span>
-                </div>
+                {/* value inputs per type */}
+                {c.type === 'wv' && (
+                  <div className="comp-conc-row">
+                    <input className="comp-conc" type="number" value={c.conc} min={0} max={100} step={0.01}
+                      onChange={e => updComp(c.id, { conc: e.target.value })} placeholder="%" />
+                    <span style={{fontSize:10,color:'var(--text3)',flexShrink:0}}>%</span>
+                  </div>
+                )}
+                {c.type === 'vv' && (
+                  <div className="comp-conc-row">
+                    <input className="comp-conc" type="number" value={c.conc} min={0} max={100} step={0.01}
+                      onChange={e => updComp(c.id, { conc: e.target.value })} placeholder="%" />
+                    <span style={{fontSize:10,color:'var(--text3)',flexShrink:0}}>%</span>
+                  </div>
+                )}
+                {c.type === 'mol' && (
+                  <div style={{display:'grid',gridTemplateColumns:'54px 1fr 52px',gap:3,alignItems:'center'}}>
+                    <select value={c.molUnit||'mM'} onChange={e => updComp(c.id, { molUnit: e.target.value })}>
+                      <option value="M">M</option>
+                      <option value="mM">mM</option>
+                      <option value="uM">μM</option>
+                    </select>
+                    <input className="comp-conc" type="number" value={c.conc} min={0} step={0.001}
+                      onChange={e => updComp(c.id, { conc: e.target.value })} placeholder="농도" />
+                    <input type="number" value={c.mw||''} min={0} step={0.1}
+                      onChange={e => updComp(c.id, { mw: e.target.value })}
+                      placeholder="MW"
+                      title="분자량 (g/mol)"
+                      style={{fontSize:11,padding:'4px 5px',textAlign:'right'}} />
+                  </div>
+                )}
+                {c.type === 'dil' && (
+                  <div className="comp-conc-row">
+                    <span style={{fontSize:10,color:'var(--text3)',flexShrink:0}}>1 :</span>
+                    <input className="comp-conc" type="number" value={c.dilRatio||''} min={1} step={1}
+                      onChange={e => updComp(c.id, { dilRatio: e.target.value })} placeholder="배수" />
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div style={{marginBottom:3}}>
+                <select value={c.type} onChange={e => updComp(c.id, { type: e.target.value })}
+                  style={{fontSize:11,padding:'3px 4px',width:'72px'}}>
+                  <option value="wv">% w/v</option>
+                  <option value="vv">% v/v</option>
+                  <option value="mol">몰농도</option>
+                  <option value="dil">희석배수</option>
+                  <option value="upto">up to</option>
+                </select>
               </div>
             )}
           </div>
@@ -473,7 +512,7 @@ function IHCPanel({ tabName, cfg, onChange }) {
 }
 
 // ── App ───────────────────────────────────────────────────────────────────────
-const STORAGE_KEY = 'reagent-calc-v4';
+const STORAGE_KEY = 'reagent-calc-v5';
 
 function loadTabs() {
   try { const r = localStorage.getItem(STORAGE_KEY); if (r) return JSON.parse(r); } catch {}
